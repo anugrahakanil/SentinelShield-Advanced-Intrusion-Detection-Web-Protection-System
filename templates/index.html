@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SentinelShield</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body{
+            background:#020617;
+            color:white;
+            font-family:Arial, sans-serif;
+            padding:40px;
+        }
+
+        .container{
+            max-width:1100px;
+            margin:auto;
+            background:#111827;
+            padding:40px;
+            border-radius:15px;
+            box-shadow:0px 0px 20px rgba(56,189,248,0.2);
+        }
+
+        h1{
+            text-align:center;
+            color:#38bdf8;
+            font-size:45px;
+        }
+
+        p{
+            color:#cbd5e1;
+        }
+
+        textarea{
+            width:100%;
+            height:120px;
+            background:#1e293b;
+            color:white;
+            border:none;
+            padding:15px;
+            border-radius:10px;
+            margin-top:20px;
+            font-size:16px;
+        }
+
+        button{
+            padding:15px;
+            background:#38bdf8;
+            border:none;
+            border-radius:10px;
+            font-size:16px;
+            cursor:pointer;
+            font-weight:bold;
+            color:black;
+        }
+
+        button:hover{
+            opacity:0.9;
+        }
+
+        .main-btn{
+            width:100%;
+            margin-top:20px;
+            font-size:18px;
+        }
+
+        .result{
+            margin-top:30px;
+            padding:20px;
+            border-radius:10px;
+            background:#1e293b;
+        }
+
+        .safe{
+            color:#4ade80;
+            font-weight:bold;
+        }
+
+        .blocked{
+            color:#f87171;
+            font-weight:bold;
+        }
+
+        .stats{
+            display:flex;
+            gap:20px;
+            margin-top:30px;
+            margin-bottom:30px;
+            flex-wrap:wrap;
+        }
+
+        .card{
+            flex:1;
+            min-width:200px;
+            background:#1e293b;
+            padding:20px;
+            border-radius:10px;
+            text-align:center;
+        }
+
+        .analytics-box{
+            margin-top:30px;
+            background:#1e293b;
+            padding:20px;
+            border-radius:10px;
+        }
+
+        table{
+            width:100%;
+            margin-top:20px;
+            border-collapse:collapse;
+        }
+
+        th, td{
+            padding:12px;
+            border-bottom:1px solid #334155;
+            text-align:center;
+        }
+
+        .logs-box{
+            background:#0f172a;
+            padding:20px;
+            border-radius:10px;
+            margin-top:20px;
+            overflow-x:auto;
+        }
+
+        .simulation-buttons{
+            display:flex;
+            gap:15px;
+            flex-wrap:wrap;
+            margin-top:20px;
+        }
+
+        .simulation-buttons button{
+            flex:1;
+            min-width:220px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🛡️ SentinelShield</h1>
+
+        <div style="
+            text-align:center;
+            color:#94a3b8;
+            margin-top:-10px;
+            margin-bottom:20px;
+        ">
+
+            🕒 Monitoring Time:
+            <span id="clock"></span>
+
+        </div>
+
+        <p style="text-align:center;">
+            Advanced Intrusion Detection & Web Protection System
+        </p>
+
+        <!-- Statistics Cards -->
+
+        <div class="stats">
+
+            <div class="card">
+
+                <h2 style="color:#38bdf8;">
+                    {{ total_attacks }}
+                </h2>
+
+                <p>Total Attacks</p>
+
+            </div>
+
+            <div class="card">
+
+                <h2 style="color:#facc15;">
+                    {{ abusive_requests }}
+                </h2>
+
+                <p>Abusive Requests</p>
+
+            </div>
+
+            <div class="card">
+
+                <h2 style="color:#4ade80;">
+                    {{ safe_requests }}
+                </h2>
+
+                <p>Safe Requests</p>
+
+            </div>
+
+        </div>
+        <div class="card">
+
+    <h2 style="color:#ef4444;">
+        {{ critical_attacks }}
+    </h2>
+
+    <p>Critical Attacks</p>
+
+</div>
+
+        <!-- Attack Analytics -->
+
+        <div class="analytics-box">
+
+            <h2 style="color:#38bdf8;">
+                📊 Attack Category Analytics
+            </h2>
+
+            <table>
+
+                <tr>
+                    <th>Attack Type</th>
+                    <th>Detected Count</th>
+                </tr>
+
+                <tr>
+                    <td>XSS</td>
+                    <td>{{ attack_summary["XSS"] }}</td>
+                </tr>
+
+                <tr>
+                    <td>SQL Injection</td>
+                    <td>{{ attack_summary["SQL Injection"] }}</td>
+                </tr>
+
+                <tr>
+                    <td>Directory Traversal</td>
+                    <td>{{ attack_summary["Directory Traversal"] }}</td>
+                </tr>
+
+                <tr>
+                    <td>Command Injection</td>
+                    <td>{{ attack_summary["Command Injection"] }}</td>
+                </tr>
+                <tr>
+    <td>LFI</td>
+    <td>{{ attack_summary["LFI"] }}</td>
+</tr>
+
+            </table>
+
+        </div>
+
+        <!-- Attack Chart -->
+
+        <div class="analytics-box">
+
+            <h2 style="color:#38bdf8;">
+                📈 Attack Distribution Chart
+            </h2>
+
+            <canvas id="attackChart"></canvas>
+
+        </div>
+
+<div class="analytics-box">
+
+    <h2 style="color:#38bdf8;">
+        🥧 Threat Distribution Overview
+    </h2>
+
+    <div style="
+    max-width:400px;
+    margin:auto;
+">
+
+    <canvas id="pieChart"></canvas>
+
+</div>
+
+</div>
+
+        <!-- Threat Intelligence -->
+
+        <div class="analytics-box">
+
+            <h2 style="color:#38bdf8;">
+                🌍 Threat Intelligence
+            </h2>
+
+            <table>
+
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>System Health</td>
+
+                    <td style="color:#4ade80;">
+                        {{ system_health }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Latest Detected Attack</td>
+
+                    <td style="color:#f87171;">
+                        {{ latest_attack }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Total Logged Incidents</td>
+
+                    <td>
+                        {{ total_attacks }}
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <!-- Attack Simulation -->
+
+        <div style="
+            margin-top:30px;
+            margin-bottom:20px;
+        ">
+
+            <h2 style="color:#38bdf8;">
+                🎯 Attack Simulation Panel
+            </h2>
+
+            <div class="simulation-buttons">
+
+                <button
+                    type="button"
+                    onclick="setPayload('&lt;script&gt;alert(`xss`)&lt;/script&gt;')">
+
+                    Simulate XSS
+                </button>
+
+                <button
+                    type="button"
+                    onclick="setPayload(`' OR '1'='1`)">
+
+                    Simulate SQL Injection
+                </button>
+
+                <button
+    type="button"
+    onclick="setPayload('../../../secret.txt')">
+
+    Simulate Directory Traversal
+</button>
+
+                <button
+                    type="button"
+                    onclick="setPayload('; ls')">
+
+                    Simulate Command Injection
+                </button>
+
+                <button
+    type="button"
+    onclick="setPayload('../../etc/passwd')">
+
+    Simulate LFI
+</button>
+
+            </div>
+
+        </div>
+
+        <!-- Request Form -->
+
+        <form method="POST">
+
+            <textarea
+                name="payload"
+                placeholder="Enter suspicious request payload..."
+                required></textarea>
+
+            <button
+                type="submit"
+                class="main-btn">
+
+                Analyze Request
+
+            </button>
+
+        </form>
+
+        <!-- Alert Banner -->
+
+        {% if result and result.status == "Blocked" %}
+
+            <div style="
+                background:#7f1d1d;
+                color:white;
+                padding:15px;
+                border-radius:10px;
+                margin-top:30px;
+                text-align:center;
+                font-weight:bold;
+            ">
+
+                🚨 SECURITY ALERT:
+                Malicious activity detected and blocked!
+
+            </div>
+
+        {% elif result and result.status == "Abusive" %}
+
+            <div style="
+                background:#854d0e;
+                color:white;
+                padding:15px;
+                border-radius:10px;
+                margin-top:30px;
+                text-align:center;
+                font-weight:bold;
+            ">
+
+                ⚠️ CRITICAL ALERT:
+                Repeated malicious activity detected!
+
+            </div>
+
+        {% endif %}
+
+        <!-- Detection Result -->
+
+        {% if result %}
+
+        <div class="result">
+
+            {% if result.status == "Abusive" %}
+
+                <h2 style="color:#facc15;">
+                    ⚠️ Abusive Activity Detected
+                </h2>
+
+                <p>
+                    Multiple malicious requests detected.
+                </p>
+
+                <p>
+                    Attack Type:
+                    {{ result.attack_type }}
+                </p>
+
+                <p>
+                    Matched Pattern:
+                    {{ result.matched_pattern }}
+                </p>
+
+                <p>
+                    Severity Level:
+                    {{ result.severity }}
+                </p>
+
+            {% elif result.status == "Blocked" %}
+
+                <h2 class="blocked">
+                    ❌ Malicious Request Detected
+                </h2>
+
+                <p>
+                    Attack Type:
+                    {{ result.attack_type }}
+                </p>
+
+                <p>
+                    Matched Pattern:
+                    {{ result.matched_pattern }}
+                </p>
+
+                <p>
+                    Severity Level:
+                    {{ result.severity }}
+                </p>
+
+            {% else %}
+
+                <h2 class="safe">
+                    ✅ Safe Request
+                </h2>
+
+                <p>
+                    Severity Level:
+                    {{ result.severity }}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+        <!-- Download Report -->
+
+        <a href="/download-report">
+
+            <button style="
+                background:#22c55e;
+                margin-top:30px;
+                width:100%;
+            ">
+
+                📥 Download Security Report
+
+            </button>
+
+        </a>
+
+        <!-- Logs -->
+
+        <hr style="
+            margin-top:40px;
+            border-color:#334155;
+        ">
+
+        <h2 style="color:#38bdf8;">
+            📜 Recent Attack Logs
+        </h2>
+
+        <div class="logs-box">
+
+            {% if structured_logs %}
+
+            <table>
+
+                <tr>
+                    <th>Timestamp</th>
+                    <th>IP Address</th>
+                    <th>Detection</th>
+                    <th>Payload</th>
+                    <th>Severity</th>
+                </tr>
+
+                {% for log in structured_logs %}
+
+                <tr>
+
+                    <td>{{ log.timestamp }}</td>
+
+                    <td>{{ log.ip }}</td>
+
+                    <td>{{ log.type }}</td>
+
+                    <td>{{ log.payload }}</td>
+                    <td>
+
+    {% if "XSS" in log.type %}
+        <span style="color:#f87171;">High</span>
+
+    {% elif "SQL Injection" in log.type %}
+        <span style="color:#ef4444;">Critical</span>
+
+    {% elif "Directory Traversal" in log.type %}
+        <span style="color:#facc15;">Medium</span>
+
+    {% elif "Command Injection" in log.type %}
+    <span style="color:#fb923c;">High</span>
+
+{% elif "LFI" in log.type %}
+    <span style="color:#a855f7;">High</span>
+
+{% else %}
+        <span style="color:#4ade80;">Low</span>
+
+    {% endif %}
+
+</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+
+                <p>No attack logs found.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+
+    <script>
+
+        const ctx = document.getElementById('attackChart');
+
+        new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+                    'XSS',
+                    'SQL Injection',
+                    'Directory Traversal',
+                    'Command Injection',
+                    'LFI'
+                ],
+
+                datasets: [{
+
+                    label: 'Detected Attacks',
+
+                    data: [
+                        "{{ attack_summary['XSS'] }}",
+                        "{{ attack_summary['SQL Injection'] }}",
+                        "{{ attack_summary['Directory Traversal'] }}",
+                        "{{ attack_summary['Command Injection'] }}",
+                        "{{ attack_summary['LFI'] }}"
+                    ],
+
+                    borderWidth: 1
+
+                }]
+            },
+
+            options: {
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+
+        function setPayload(payload){
+
+            document.querySelector(
+                'textarea[name="payload"]'
+            ).value = payload;
+        }
+
+        function updateClock(){
+
+            const now = new Date();
+
+            document.getElementById('clock').innerText =
+                now.toLocaleString();
+        }
+
+        setInterval(updateClock, 1000);
+
+        updateClock();
+        const pieCtx = document.getElementById('pieChart');
+
+new Chart(pieCtx, {
+
+    type: 'pie',
+
+    data: {
+
+        labels: [
+            'XSS',
+            'SQL Injection',
+            'Directory Traversal',
+            'Command Injection',
+            'LFI'
+        ],
+
+        datasets: [{
+
+            data: [
+                "{{ attack_summary['XSS'] }}",
+                "{{ attack_summary['SQL Injection'] }}",
+                "{{ attack_summary['Directory Traversal'] }}",
+                "{{ attack_summary['Command Injection'] }}",
+                "{{ attack_summary['LFI'] }}"
+            ]
+
+        }]
+    }
+
+});
+
+    </script>
+
+</body>
+
+</html>

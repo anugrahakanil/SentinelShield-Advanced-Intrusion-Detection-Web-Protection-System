@@ -1,0 +1,40 @@
+[2026-05-27 17:19:58.901137] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:24:39.745918] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:32:55.826075] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:33:00.003068] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:33:03.549231] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:33:06.952082] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:33:19.668868] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:33:27.638678] ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 17:36:42.729494] IP: 127.0.0.1 | ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+[2026-05-27 20:55:36.723177] IP: 127.0.0.1 | ATTACK DETECTED | Type: XSS | Payload: <script>alert('xss')</script>
+
+
+
+
+[2026-05-27 21:39:46.787093] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../etc/passwd
+[2026-05-27 21:40:03.207016] IP: 127.0.0.1 | ATTACK DETECTED | Type: Command Injection | Payload: ; ls
+[2026-05-27 22:03:33.934890] IP: 127.0.0.1 | ATTACK DETECTED | Type: XSS | Payload: <script>alert(`xss`)</script>
+[2026-05-29 14:30:08.990477] IP: 127.0.0.1 | ATTACK DETECTED | Type: XSS | Payload: <script>alert(`xss`)</script>
+[2026-05-29 14:32:34.753742] IP: 127.0.0.1 | ATTACK DETECTED | Type: XSS | Payload: <script>alert(`xss`)</script>
+[2026-05-29 14:32:47.310851] IP: 127.0.0.1 | ATTACK DETECTED | Type: SQL Injection | Payload: ' or '1'='1
+[2026-05-29 14:33:01.675357] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../etc/passwd
+[2026-05-29 14:33:10.614781] IP: 127.0.0.1 | ATTACK DETECTED | Type: Command Injection | Payload: ; ls
+[2026-05-29 15:03:08.212467] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../etc/passwd
+[2026-05-29 15:03:32.631377] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../etc/passwd
+[2026-06-26 14:48:05.680364] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../etc/passwd
+[2026-06-26 14:52:34.732107] IP: 127.0.0.1 | ATTACK DETECTED | Type: LFI | Payload: ../etc/passwd
+[2026-07-01 23:56:50.986443] IP: 127.0.0.1 | ATTACK DETECTED | Type: XSS | Payload: <script>alert(`xss`)</script>
+[2026-07-01 23:57:19.438075] IP: 127.0.0.1 | ATTACK DETECTED | Type: SQL Injection | Payload: ' or '1'='1
+[2026-07-01 23:57:40.624051] IP: 127.0.0.1 | ATTACK DETECTED | Type: LFI | Payload: ../../etc/passwd
+[2026-07-01 23:57:54.338686] IP: 127.0.0.1 | ATTACK DETECTED | Type: Command Injection | Payload: ; ls
+
+[2026-07-02 23:53:24.990676] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../etc/passwd
+[2026-07-02 23:53:32.815188] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../etc/passwd
+[2026-07-03 00:00:12.177220] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../../secret.txt
+[2026-07-03 00:00:19.594961] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../etc/passwd
+[2026-07-03 00:04:56.885097] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../../secret.txt
+
+[2026-07-03 00:12:06.169142] IP: 127.0.0.1 | ATTACK DETECTED | Type: Directory Traversal | Payload: ../../../secret.txt
+
+[2026-07-03 00:13:28.871363] IP: 127.0.0.1 | ATTACK DETECTED | Type: LFI | Payload: ../../etc/passwd

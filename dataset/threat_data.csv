@@ -1,0 +1,6 @@
+ip_address,threat_type,severity,status
+192.168.1.10,Malware,High,Detected
+192.168.1.15,DDoS,Critical,Blocked
+192.168.1.20,Phishing,Medium,Monitoring
+192.168.1.25,Ransomware,Critical,Detected
+192.168.1.30,SQL Injection,High,Blocked
